@@ -1,5 +1,6 @@
 namespace backend.DTOs;
 
 public class LoginDto {
-    public required string
+    public required string Email { get; set;}
+    public required string Password { get; set; }
 }
