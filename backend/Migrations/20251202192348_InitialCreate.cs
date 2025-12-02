@@ -18,9 +18,9 @@ namespace backend.Migrations
                 {
                     id_user = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    password_hash = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    email_user = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    password_hash_user = table.Column<string>(type: "text", nullable: false),
+                    created_at_user = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,11 @@ namespace backend.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     user_id_favorite_movie = table.Column<int>(type: "integer", nullable: false),
                     imdb_id_favorite_movie = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    title_favorite_movie = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    year_favorite_movie = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    poster_favorite_movie = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    type_favorite_movie = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    created_at_favorite_movie = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,9 +58,9 @@ namespace backend.Migrations
                 column: "user_id_favorite_movie");
 
             migrationBuilder.CreateIndex(
-                name: "IX_users_email",
+                name: "IX_users_email_user",
                 table: "users",
-                column: "email",
+                column: "email_user",
                 unique: true);
         }
 
