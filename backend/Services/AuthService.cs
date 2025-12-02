@@ -44,6 +44,28 @@ public class AuthService: IAuthService {
 
     }
 
+    public async Task<User> LoginAsync(LoginDto dto)
+    {
+        // Buscar usuario por email
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Email == dto.Email);
+
+        if (user == null)
+        {
+            throw new UnauthorizedAccessException("Credenciales inválidas");
+        }
+
+        // Verificamos la contraseña
+        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
+
+        if (!isPasswordValid)
+        {
+            throw new UnauthorizedAccessException("Credenciales inválidas");
+        }
+
+        return user;
+    }
+
     public string GenerateJwtToken(User user){
         var jwtKey = _configuration["Jwt:key"] ?? throw new InvalidOperationException("JWT Key no configurada");
         var jwtIssuer = _configuration["Jwt:Issuer"] ?? "MovieApi";

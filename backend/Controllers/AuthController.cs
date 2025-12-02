@@ -38,4 +38,29 @@ public class AuthController : ControllerBase{
         }
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto dto)
+    {
+        try
+        {
+            var user = await _authService.LoginAsync(dto);
+            var token = _authService.GenerateJwtToken(user);
+            
+            return Ok(new
+            {
+                message = "Login exitoso",
+                email = user.Email,
+                token = token
+            });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = "Error interno del servidor", details = ex.Message });
+        }
+    }
+
 }
