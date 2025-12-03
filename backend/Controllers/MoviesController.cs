@@ -44,7 +44,8 @@ public class MoviesController : ControllerBase{
             {
                 Movies = result.Search,
                 TotalResults = int.Parse(result.TotalResults),
-                Page = page
+                Page = page,
+                Response = result.Response
             };
 
             return Ok(response);

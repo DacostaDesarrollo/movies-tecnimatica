@@ -1,1 +1,109 @@
-<p>search works!</p>
+<div class="search-container">
+
+  <!-- Hero Card del Buscador -->
+  <nb-card class="search-hero-card">
+    <nb-card-body>
+      <div class="search-hero-content">
+        <nb-icon icon="film-outline" class="hero-icon"></nb-icon>
+        <h1 class="hero-title">Busca tu Película Favorita</h1>
+
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+
+          <!-- Input de búsqueda con botón inline -->
+          <div class="search-input-wrapper">
+            <div class="search-input-group">
+              <input
+                nbInput
+                fullWidth
+                type="text"
+                formControlName="title"
+                placeholder="Escribe el título de una película..."
+                shape="semi-round"
+                size="giant"
+                status="primary"
+              >
+              <nb-icon icon="search-outline" class="search-icon"></nb-icon>
+            </div>
+
+            <button
+              nbButton
+              status="primary"
+              type="submit"
+              [disabled]="searchForm.invalid || isLoading"
+              class="search-button shape-semi-round"
+            >
+              Buscar
+              <nb-icon icon="search-outline" *ngIf="!isLoading"></nb-icon>
+              <nb-icon icon="loader-outline" *ngIf="isLoading" class="spinning"></nb-icon>
+            </button>
+          </div>
+
+          <!-- Mensaje de error de validación -->
+          <div *ngIf="titleControl?.invalid && titleControl?.touched" class="validation-error">
+            <small *ngIf="titleControl?.errors?.['required']">El título es requerido</small>
+            <small *ngIf="titleControl?.errors?.['minlength']">Mínimo 3 caracteres</small>
+          </div>
+
+          <!-- Selector de tipo -->
+          <div class="type-selector">
+            <nb-radio-group formControlName="type">
+              <nb-radio [value]="MovieType.Movie">Películas</nb-radio>
+              <nb-radio [value]="MovieType.Series">Series</nb-radio>
+              <nb-radio [value]="MovieType.Episode">Episodios</nb-radio>
+            </nb-radio-group>
+          </div>
+        </form>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <!-- Sección de Resultados -->
+  <div class="results-section" *ngIf="hasSearched">
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+      <nb-spinner size="giant" status="primary"></nb-spinner>
+      <p>Buscando películas...</p>
+    </div>
+
+    <!-- Error Alert -->
+    <nb-alert *ngIf="errorMessage && !isLoading" status="warning" closable (close)="errorMessage = ''">
+      {{ errorMessage }}
+    </nb-alert>
+
+    <!-- Grid de Resultados -->
+    <nb-card *ngIf="movies.length > 0 && !isLoading" >
+      <nb-card-body>
+      <div class="results-content">
+        <div class="results-header">
+          <h2>Resultados de la búsqueda</h2>
+          <span class="results-count">{{ movies.length }} películas encontradas</span>
+        </div>
+
+        <div class="movies-grid">
+          <nb-card *ngFor="let movie of movies" class="movie-card">
+            <nb-card-body>
+              <div class="movie-poster">
+                <img
+                  [src]="movie.Poster !== 'N/A' ? movie.Poster : 'assets/no-poster.png'"
+                  [alt]="movie.Title"
+                  (error)="$any($event.target).src='assets/no-poster.png'"
+                >
+              </div>
+              <div class="movie-info">
+                <h3 class="movie-title">{{ movie.Title }}</h3>
+                <p class="movie-year">{{ movie.Year }}</p>
+                <button nbButton status="warning" size="small" fullWidth>
+                  <nb-icon icon="star-outline"></nb-icon>
+                  Agregar a Favoritos
+                </button>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+     </nb-card-body>
+  </nb-card>
+  </div>
+
+</div>

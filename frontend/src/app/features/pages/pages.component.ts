@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NbActionsModule, NbContextMenuModule, NbIconModule, NbLayoutModule, NbMenuModule, NbSidebarModule, NbUserModule } from '@nebular/theme';
+import { NbActionsModule, NbButtonModule, NbContextMenuModule, NbIconModule, NbLayoutModule, NbMenuModule, NbSidebarModule, NbUserModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-pages',
@@ -13,7 +13,8 @@ import { NbActionsModule, NbContextMenuModule, NbIconModule, NbLayoutModule, NbM
     NbActionsModule,
     NbUserModule,
     NbContextMenuModule,
-    RouterOutlet
+    RouterOutlet,
+    NbButtonModule
   ],
   templateUrl: './pages.component.html',
   styleUrl: './pages.component.scss'
