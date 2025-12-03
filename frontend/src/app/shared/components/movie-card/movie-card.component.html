@@ -1,0 +1,19 @@
+<nb-card class="movie-card">
+  <nb-card-body>
+    <div class="movie-poster">
+      <img
+        [src]="movie.Poster !== 'N/A' ? movie.Poster : 'assets/no-poster.png'"
+        [alt]="movie.Title"
+        (error)="handleImageError($event)"
+      >
+    </div>
+    <div class="movie-info">
+      <h3 class="movie-title">{{ movie.Title }}</h3>
+      <p class="movie-year">{{ movie.Year }}</p>
+      <button nbButton status="warning" size="small" fullWidth (click)="onAddToFavorites()">
+        <nb-icon icon="star-outline"></nb-icon>
+        Agregar a Favoritos
+      </button>
+    </div>
+  </nb-card-body>
+</nb-card>

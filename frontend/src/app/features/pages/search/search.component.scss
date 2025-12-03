@@ -139,61 +139,11 @@
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: flex-start;
-}
 
-.movie-card {
-  flex: 1 1 calc(25% - 1.5rem); // 4 columnas en desktop
-  min-width: 250px;
-  max-width: 300px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  }
-
-  nb-card-body {
-    padding: 0;
-  }
-}
-
-.movie-poster {
-  width: 100%;
-  height: 350px;
-  overflow: hidden;
-  background: var(--background-basic-color-3);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.movie-info {
-  padding: 1rem;
-
-  .movie-title {
-    font-size: 1rem;
-    margin: 0 0 0.5rem;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    min-height: 2.5rem;
-  }
-
-  .movie-year {
-    color: var(--text-hint-color);
-    margin: 0 0 1rem;
-    font-size: 0.875rem;
-  }
-
-  button {
-    margin-top: 0.5rem;
+  app-movie-card {
+    flex: 1 1 calc(25% - 1.5rem); // 4 columnas en desktop
+    min-width: 250px;
+    max-width: 300px;
   }
 }
 
@@ -214,7 +164,7 @@
 
 // Responsive
 @media (max-width: 1200px) {
-  .movie-card {
+  .movies-grid app-movie-card {
     flex: 1 1 calc(33.333% - 1.5rem); // 3 columnas en pantallas medianas
   }
 }
@@ -244,11 +194,11 @@
 
   .movies-grid {
     gap: 1rem;
-  }
 
-  .movie-card {
-    flex: 1 1 calc(50% - 1rem); // 2 columnas en tablet
-    min-width: 100%;
+    app-movie-card {
+      flex: 1 1 calc(50% - 1rem); // 2 columnas en tablet
+      min-width: 100%;
+    }
   }
 
   .results-header {
@@ -259,7 +209,7 @@
 }
 
 @media (max-width: 480px) {
-  .movie-card {
+  .movies-grid app-movie-card {
     flex: 1 1 100%; // 1 columna en móvil
     max-width: 100%;
   }

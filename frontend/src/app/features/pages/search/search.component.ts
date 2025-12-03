@@ -4,6 +4,7 @@ import { NbAlertModule, NbButtonModule, NbCardModule, NbFormFieldModule, NbIconM
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Movie, MovieType, SearchResponse } from '../../../core/models/movie.model';
+import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card.component';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +19,8 @@ import { Movie, MovieType, SearchResponse } from '../../../core/models/movie.mod
     NbRadioModule,
     NbAlertModule,
     NbSpinnerModule,
-    NbFormFieldModule
+    NbFormFieldModule,
+    MovieCardComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
@@ -81,5 +83,12 @@ export class SearchComponent implements OnInit {
 
   get titleControl() {
     return this.searchForm.get('title');
+  }
+
+  onAddToFavorites(movie: Movie): void {
+    console.log('Agregar a favoritos:', movie);
+    // TODO: Implementar lógica de agregar a favoritos
+
+
   }
 }
