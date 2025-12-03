@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@nebular/theme/styles/prebuilt/default';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}

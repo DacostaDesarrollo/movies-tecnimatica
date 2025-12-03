@@ -1,0 +1,79 @@
+<nb-layout>
+  <nb-layout-column class="centered-layout">
+    <nb-card class="auth-card">
+      <nb-card-header>
+        <h3 class="title">Iniciar Sesión</h3>
+        <p class="subtitle">Ingresa tus credenciales para continuar</p>
+      </nb-card-header>
+
+      <nb-card-body>
+        <!-- Mensaje de error -->
+        <nb-alert *ngIf="errorMessage" status="danger" closable (close)="errorMessage = ''">
+          {{ errorMessage }}
+        </nb-alert>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" class="label">Email</label>
+            <input
+              nbInput
+              fullWidth
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="tu@email.com"
+              [status]="email?.invalid && email?.touched ? 'danger' : 'basic'"
+            >
+            <div class="error-message" *ngIf="email?.invalid && email?.touched">
+              <span *ngIf="email?.errors?.['required']">El email es obligatorio</span>
+              <span *ngIf="email?.errors?.['email']">El email no es válido</span>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password" class="label">Contraseña</label>
+            <input
+              nbInput
+              fullWidth
+              type="password"
+              id="password"
+              formControlName="password"
+              placeholder="Contraseña"
+              [status]="password?.invalid && password?.touched ? 'danger' : 'basic'"
+            >
+            <div class="error-message" *ngIf="password?.invalid && password?.touched">
+              <span *ngIf="password?.errors?.['required']">La contraseña es obligatoria</span>
+              <span *ngIf="password?.errors?.['minlength']">Mínimo 6 caracteres</span>
+            </div>
+          </div>
+
+          <!-- Remember Me -->
+          <div class="form-group">
+            <nb-checkbox formControlName="rememberMe">
+              Recordarme
+            </nb-checkbox>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            nbButton
+            fullWidth
+            status="primary"
+            type="submit"
+            [disabled]="loading"
+          >
+            <span *ngIf="!loading">Iniciar Sesión</span>
+            <span *ngIf="loading">Cargando...</span>
+          </button>
+        </form>
+
+        <!-- Link a registro -->
+        <div class="register-link">
+          <p>¿No tienes cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>
