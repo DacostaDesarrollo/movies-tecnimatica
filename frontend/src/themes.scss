@@ -1,0 +1,17 @@
+@forward '@nebular/theme/styles/theming';
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+
+$nb-themes: nb-register-theme(
+  (
+    // Fuentes
+    font-family-primary: 'Roboto, sans-serif',
+    font-family-secondary: 'Roboto, sans-serif',
+
+    // Colores personalizados (opcional)
+    // color-primary-500: #3366ff,
+    // color-success-500: #00d68f,
+  ),
+  default,
+  default
+);

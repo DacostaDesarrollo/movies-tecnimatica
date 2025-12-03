@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule, NbLayoutModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbIconModule, NbInputModule, NbLayoutModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,8 @@ import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbInputM
     NbInputModule,
     NbButtonModule,
     NbCheckboxModule,
-    NbAlertModule
+    NbAlertModule,
+    NbIconModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
