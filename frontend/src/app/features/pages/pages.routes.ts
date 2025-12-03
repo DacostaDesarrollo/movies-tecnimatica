@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '../../core/guards/auth.guard';
 
 export const PAGES_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages.component').then(m => m.PagesComponent),
+    canActivate: [authGuard],
     children: [
       {
         path: 'search',
