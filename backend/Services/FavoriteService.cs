@@ -58,7 +58,12 @@ public class FavoriteService : IFavoriteService{
 
         return (favorites, totalCount);
     }
-
+    public async Task<List<string>> GetUserFavoriteImdbIdsAsync(int userId){
+        return await _context.FavoriteMovies
+            .Where(f => f.UserId == userId)
+            .Select(f => f.ImdbId)
+            .ToListAsync();
+    }
     public async Task<bool> RemoveFavoriteAsync(int userId, int favoriteId)
     {
         var favorite = await _context.FavoriteMovies

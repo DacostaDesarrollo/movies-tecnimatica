@@ -18,5 +18,8 @@ public class OmdbMovieDto
     
     [JsonPropertyName("Poster")]
     public string Poster { get; set; } = string.Empty;
+    
+    [JsonPropertyName("IsFavorite")]
+    public bool IsFavorite { get; set; }
 }
 

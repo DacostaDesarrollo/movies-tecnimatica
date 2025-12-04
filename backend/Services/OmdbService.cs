@@ -7,18 +7,20 @@ public class OmdbService : IOmdbService
 {
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
+    private readonly IFavoriteService _favoriteService;
     private readonly string _apiKey;
     private readonly string _baseUrl;
 
-    public OmdbService(HttpClient httpClient, IConfiguration configuration)
+    public OmdbService(HttpClient httpClient, IConfiguration configuration, IFavoriteService favoriteService)
     {
         _httpClient = httpClient;
         _configuration = configuration;
+        _favoriteService = favoriteService;
         _apiKey = _configuration["OMDb:ApiKey"] ?? throw new InvalidOperationException("OMDb API Key no configurada");
         _baseUrl = _configuration["OMDb:BaseUrl"] ?? "https://www.omdbapi.com/";
     }
-
-    public async Task<OmdbSearchResponseDto> SearchMoviesAsync(string title, int page = 1, string type= "movie")
+    
+    public async Task<OmdbSearchResponseDto> SearchMoviesAsync(string title, int userId, int page = 1, string type = "movie")
     {
         try
         {
@@ -30,14 +32,28 @@ public class OmdbService : IOmdbService
             
             // Leer el contenido de la respuesta
             var content = await response.Content.ReadAsStringAsync();
-            
+
             // Deserializar JSON a objeto
             var result = JsonSerializer.Deserialize<OmdbSearchResponseDto>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
             
-            return result ?? new OmdbSearchResponseDto();
+            if (result == null || result.Search == null || !result.Search.Any())
+            {
+                return result ?? new OmdbSearchResponseDto();
+            }
+
+            // Obtener IDs de favoritos del usuario
+            var favoriteIds = await _favoriteService.GetUserFavoriteImdbIdsAsync(userId);
+
+            // Marcar películas que están en favoritos
+            foreach (var movie in result.Search)
+            {
+                movie.IsFavorite = favoriteIds.Contains(movie.ImdbID);
+            }
+            
+            return result;
         }
         catch (HttpRequestException ex)
         {

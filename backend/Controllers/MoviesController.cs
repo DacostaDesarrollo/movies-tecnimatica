@@ -26,6 +26,7 @@ public class MoviesController : ControllerBase{
     public async Task<IActionResult> SearchMovies([FromQuery] string title, [FromQuery] int page = 1, [FromQuery] string type = "movie"){
         try
         {
+
             if (string.IsNullOrWhiteSpace(title)){
                 return BadRequest(new {Error = "El parametro 'title' es obligatorio."});
             }
@@ -33,8 +34,9 @@ public class MoviesController : ControllerBase{
             if (title.Length < 2){
                 return BadRequest(new { error = "El título debe tener al menos 2 caracteres" });
             }
+            var userId = GetUserIdFromToken();
 
-            var result = await _omdbService.SearchMoviesAsync(title, page, type);
+            var result = await _omdbService.SearchMoviesAsync(title, userId, page, type);
 
             if (result.Response == "False") {
                 return NotFound(new { error = result.Error ?? "No se encontraron películas" });
@@ -192,6 +194,16 @@ public class MoviesController : ControllerBase{
                 Details = ex.Message 
             });
         }
+    }
+
+    private int GetUserIdFromToken()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+        {
+            throw new UnauthorizedAccessException("Token inválido o usuario no autenticado");
+        }
+        return userId;
     }
 
 }
