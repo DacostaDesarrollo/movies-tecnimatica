@@ -28,8 +28,7 @@ export class LoginComponent {
 
   public loginForm: FormGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      rememberMe: [false]
+      password: ['', [Validators.required, Validators.minLength(6)]]
   });
   public loading:boolean = false;
   public errorMessage:string = '';

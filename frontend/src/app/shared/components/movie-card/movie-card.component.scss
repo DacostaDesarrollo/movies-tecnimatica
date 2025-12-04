@@ -12,6 +12,10 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   }
 
+  &.is-favorite {
+    box-shadow: 0 0 0 2px var(--color-success-500);
+  }
+
   nb-card-body {
     padding: 0;
     display: flex;
@@ -25,11 +29,30 @@
   height: 350px;
   overflow: hidden;
   background: var(--background-basic-color-3);
+  position: relative;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+}
+
+.favorite-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  padding: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  nb-icon {
+    font-size: 1.25rem;
   }
 }
 
