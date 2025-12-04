@@ -18,3 +18,22 @@ frontend/.env.local
 *.swp
 *.swo
 *~
+
+# Carpetas de compilación y binarios de tests
+backend.Tests/bin/
+backend.Tests/obj/
+
+# Resultados de pruebas
+backend.Tests/TestResults/
+
+# Reportes de cobertura
+backend.Tests/coverage/
+backend.Tests/coveragereport/
+**/coverage.cobertura.xml
+**/coverage.opencover.xml
+*.coverage
+
+# Archivos de usuario de Visual Studio
+backend.Tests/.vs/
+backend.Tests/*.user
+backend.Tests/*.suo
