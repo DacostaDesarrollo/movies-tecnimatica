@@ -35,7 +35,66 @@ export class TokenService{
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) {
+      return false;
+    }
+
+    // Verificar si el token ha expirado
+    return !this.isTokenExpired(token);
+  }
+
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payload = this.decodeToken(token);
+      if (!payload || !payload.exp) {
+        return true;
+      }
+
+      // exp viene en segundos, Date.now() en milisegundos
+      const expirationDate = payload.exp * 1000;
+      const now = Date.now();
+
+      return now >= expirationDate;
+    } catch (error) {
+      // Si hay error al decodificar, consideramos el token inválido
+      return true;
+    }
+  }
+
+  private decodeToken(token: string): any {
+    try {
+      // JWT tiene 3 partes separadas por puntos: header.payload.signature
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        return null;
+      }
+
+      // Decodificar el payload (segunda parte)
+      const payload = parts[1];
+      const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+      return JSON.parse(decoded);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  getTokenExpiration(): Date | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = this.decodeToken(token);
+      if (!payload || !payload.exp) {
+        return null;
+      }
+
+      return new Date(payload.exp * 1000);
+    } catch (error) {
+      return null;
+    }
   }
 
   clear(): void {
