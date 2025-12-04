@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { FavoriteResponse, Movie } from '../models/movie.model';
+import { FavoriteResponse, ListFavoriteResponse, Movie } from '../models/movie.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,21 @@ export class FavoriteService {
 
   }
 
-  addFavorite(movie:Movie ): Observable<FavoriteResponse>{
-    return this.http.post<FavoriteResponse>(`${this.API_URL}/favorites`,movie);
+  addFavorite(movie: Movie): Observable<FavoriteResponse> {
+    return this.http.post<FavoriteResponse>(`${this.API_URL}/favorites`, movie);
+  }
+
+  getFavorites(page: number = 1, pageSize: number = 10): Observable<ListFavoriteResponse> {
+
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<ListFavoriteResponse>(`${this.API_URL}/favorites`, { params });
+  }
+
+  removeFavorite(favoriteId: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/favorites/${favoriteId}`);
   }
 
 }

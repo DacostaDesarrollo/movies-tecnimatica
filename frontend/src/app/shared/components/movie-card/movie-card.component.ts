@@ -17,10 +17,16 @@ import { Movie } from '../../../core/models/movie.model';
 })
 export class MovieCardComponent {
   @Input() movie!: Movie;
+  @Input() mode: 'add' | 'remove' = 'add';
   @Output() addToFavorites = new EventEmitter<Movie>();
+  @Output() removeFromFavorites = new EventEmitter<Movie>();
 
   onAddToFavorites(): void {
     this.addToFavorites.emit(this.movie);
+  }
+
+  onRemoveFromFavorites(): void {
+    this.removeFromFavorites.emit(this.movie);
   }
 
   handleImageError(event: Event): void {

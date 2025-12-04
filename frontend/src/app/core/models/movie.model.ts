@@ -1,4 +1,5 @@
 export interface Movie {
+  id?: number;  // Opcional: solo existe cuando viene de favoritos
   ImdbID: string;
   Title: string;
   Year: string;
@@ -18,10 +19,20 @@ export enum MovieType {
 }
 export interface FavoriteResponse {
   id: number;
-  imdbId: number;
-  title: number;
+  imdbId: string;
+  title: string;
   year: string;
   poster: string;
   type: string;
   createdAt: string;
+}
+
+export interface ListFavoriteResponse {
+  favorites: FavoriteResponse[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
 }

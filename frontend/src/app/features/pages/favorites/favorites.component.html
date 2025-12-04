@@ -1,1 +1,76 @@
-<p>favorites works!</p>
+<div class="favorites-container">
+
+  <!-- Header -->
+  <div class="favorites-header">
+    <div class="header-content">
+      <nb-icon icon="heart" class="header-icon"></nb-icon>
+      <h1 class="header-title">Mis Películas Favoritas</h1>
+    </div>
+    <p *ngIf="!isLoading && !isEmpty" class="favorites-count">
+      {{ totalCount }} {{ totalCount === 1 ? 'película guardada' : 'películas guardadas' }}
+    </p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <nb-spinner size="giant" status="primary"></nb-spinner>
+    <p>Cargando favoritos...</p>
+  </div>
+
+  <!-- Error State -->
+  <nb-alert *ngIf="errorMessage && !isLoading" status="danger" closable (close)="errorMessage = ''">
+    {{ errorMessage }}
+    <button nbButton status="danger" size="small" (click)="loadFavorites()">
+      Reintentar
+    </button>
+  </nb-alert>
+
+  <!-- Empty State -->
+  <div *ngIf="isEmpty" class="empty-state">
+    <nb-icon icon="heart-outline" class="empty-icon"></nb-icon>
+    <h2>No tienes favoritos aún</h2>
+    <p>¡Empieza a guardar tus películas favoritas!</p>
+    <button nbButton status="primary" size="large" (click)="goToSearch()">
+      <nb-icon icon="search-outline"></nb-icon>
+      Ir a Buscar Películas
+    </button>
+  </div>
+
+  <!-- Grid de Favoritos -->
+  <div *ngIf="favorites.length > 0 && !isLoading" class="favorites-content">
+    <div class="movies-grid">
+      <app-movie-card
+        *ngFor="let movie of favorites"
+        [movie]="movie"
+        [mode]="'remove'"
+        (removeFromFavorites)="onRemoveFromFavorites($event)">
+      </app-movie-card>
+    </div>
+
+    <!-- Paginación -->
+    <div *ngIf="totalPages > 1" class="pagination-container">
+      <button
+        nbButton
+        outline
+        status="primary"
+        [disabled]="!hasPreviousPage"
+        (click)="onPageChange(currentPage - 1)">
+        <nb-icon icon="arrow-back-outline"></nb-icon>
+        Anterior
+      </button>
+
+      <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
+
+      <button
+        nbButton
+        outline
+        status="primary"
+        [disabled]="!hasNextPage"
+        (click)="onPageChange(currentPage + 1)">
+        Siguiente
+        <nb-icon icon="arrow-forward-outline"></nb-icon>
+      </button>
+    </div>
+  </div>
+
+</div>
