@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 import { Movie } from '../../../core/models/movie.model';
@@ -15,11 +15,13 @@ import { Movie } from '../../../core/models/movie.model';
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit{
   @Input() movie!: Movie;
   @Input() mode: 'add' | 'remove' = 'add';
   @Output() addToFavorites = new EventEmitter<Movie>();
   @Output() removeFromFavorites = new EventEmitter<Movie>();
+
+  ngOnInit(): void { }
 
   onAddToFavorites(): void {
     this.addToFavorites.emit(this.movie);

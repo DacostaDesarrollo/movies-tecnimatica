@@ -1,10 +1,11 @@
 export interface Movie {
-  id?: number;  // Opcional: solo existe cuando viene de favoritos
+  id?: number;
   ImdbID: string;
   Title: string;
   Year: string;
   Poster: string;
   Type: string;
+  IsFavorite?: boolean;
 }
 export interface SearchResponse {
   movies: Movie[];

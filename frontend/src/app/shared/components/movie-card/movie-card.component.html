@@ -1,6 +1,11 @@
-<nb-card class="movie-card">
+<nb-card class="movie-card" [class.is-favorite]="movie.IsFavorite">
   <nb-card-body>
     <div class="movie-poster">
+      <!-- Badge de favorito -->
+      <div class="favorite-badge" *ngIf="movie.IsFavorite && mode === 'add'">
+        <nb-icon icon="heart" status="danger"></nb-icon>
+      </div>
+
       <img
         [src]="movie.Poster !== 'N/A' ? movie.Poster : 'assets/no-poster.png'"
         [alt]="movie.Title"
@@ -11,9 +16,9 @@
       <h3 class="movie-title">{{ movie.Title }}</h3>
       <p class="movie-year">{{ movie.Year }}</p>
 
-      <!-- Botón Agregar -->
+      <!-- Botón Agregar (cambia si ya está en favoritos) -->
       <button
-        *ngIf="mode === 'add'"
+        *ngIf="mode === 'add' && !movie.IsFavorite"
         nbButton
         status="warning"
         size="small"
@@ -21,6 +26,18 @@
         (click)="onAddToFavorites()">
         <nb-icon icon="star-outline"></nb-icon>
         Agregar a Favoritos
+      </button>
+
+      <!-- Botón Ya en Favoritos (deshabilitado) -->
+      <button
+        *ngIf="mode === 'add' && movie.IsFavorite"
+        nbButton
+        status="success"
+        size="small"
+        fullWidth
+        disabled>
+        <nb-icon icon="heart"></nb-icon>
+        En Favoritos
       </button>
 
       <!-- Botón Eliminar -->

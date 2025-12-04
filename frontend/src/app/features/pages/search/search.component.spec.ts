@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { NbThemeModule, NbToastrModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SearchComponent } from './search.component';
 
 describe('SearchComponent', () => {
@@ -8,10 +11,11 @@ describe('SearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchComponent]
+      imports: [SearchComponent, NbThemeModule.forRoot(), NbToastrModule.forRoot(), NbEvaIconsModule],
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
