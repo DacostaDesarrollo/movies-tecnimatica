@@ -1,10 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { MoviesService } from '../../../core/services/movies.service';
-import { NbAlertModule, NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbRadioModule, NbSpinnerModule } from '@nebular/theme';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  NbAlertModule,
+  NbButtonModule,
+  NbCardModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbRadioModule,
+  NbSpinnerModule,
+  NbToastrService,
+} from '@nebular/theme';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Movie, MovieType, SearchResponse } from '../../../core/models/movie.model';
+import {
+  FavoriteResponse,
+  Movie,
+  MovieType,
+  SearchResponse,
+} from '../../../core/models/movie.model';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card.component';
+import { FavoriteService } from '../../../core/services/favorites.service';
 
 @Component({
   selector: 'app-search',
@@ -20,34 +41,33 @@ import { MovieCardComponent } from '../../../shared/components/movie-card/movie-
     NbAlertModule,
     NbSpinnerModule,
     NbFormFieldModule,
-    MovieCardComponent
+    MovieCardComponent,
   ],
   templateUrl: './search.component.html',
-  styleUrl: './search.component.scss'
+  styleUrl: './search.component.scss',
 })
 export class SearchComponent implements OnInit {
   searchForm!: FormGroup;
   movies: Movie[] = [];
-  isLoading:boolean = false;
-  errorMessage:string = '';
-  hasSearched:boolean = false;
+  isLoading: boolean = false;
+  errorMessage: string = '';
+  hasSearched: boolean = false;
   MovieType = MovieType;
 
   constructor(
     private fb: FormBuilder,
-    private moviesService: MoviesService){
-
-  }
+    private moviesService: MoviesService,
+    private favoriteService: FavoriteService,
+    private toastrService: NbToastrService
+  ) {}
   ngOnInit(): void {
     this.initForm();
   }
   private initForm(): void {
-
     this.searchForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
-      type: [MovieType.Movie]
+      type: [MovieType.Movie],
     });
-
   }
 
   onSearch(): void {
@@ -62,9 +82,9 @@ export class SearchComponent implements OnInit {
     const { title, type } = this.searchForm.value;
 
     this.moviesService.searchMovies(title, type, 1).subscribe({
-      next: (response:SearchResponse) => {
+      next: (response: SearchResponse) => {
         this.isLoading = false;
-        debugger
+
         if (response.response === 'True') {
           this.movies = response.movies;
         } else {
@@ -77,7 +97,7 @@ export class SearchComponent implements OnInit {
         this.movies = [];
         this.errorMessage = 'Error al buscar películas. Intenta nuevamente.';
         console.error('Error:', error);
-      }
+      },
     });
   }
 
@@ -86,9 +106,27 @@ export class SearchComponent implements OnInit {
   }
 
   onAddToFavorites(movie: Movie): void {
-    console.log('Agregar a favoritos:', movie);
-    // TODO: Implementar lógica de agregar a favoritos
 
+    this.favoriteService.addFavorite(movie).subscribe({
+        next:(response:FavoriteResponse)=>{
+
+          this.toastrService.success(
+            `"${movie.Title}" agregada a favoritos`,
+            'Éxito',
+            { duration: 3000, icon: 'checkmark-circle-outline' }
+          );
+
+        },
+        error: (error) => {
+          const errorMessage = error.error?.error || 'Error al agregar a favoritos';
+          this.toastrService.danger(
+            errorMessage,
+            'Error',
+            { duration: 4000, icon: 'alert-circle-outline' }
+          );
+          console.error('Error:', error);
+        },
+    })
 
   }
 }

@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import {
-  LoginRequest,
-  RegisterRequest,
-  AuthResponse,
-  User
-} from '../models/user.model';
-import { TokenService } from './token.service';
+
 import { SearchResponse } from '../models/movie.model';
 
 @Injectable({
@@ -39,6 +31,5 @@ export class MoviesService {
 
     return this.http.get<SearchResponse>(`${this.API_URL}/search`, { params });
   }
-
 
 }

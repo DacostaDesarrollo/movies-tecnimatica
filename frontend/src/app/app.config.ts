@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { NbActionsModule, NbContextMenuModule, NbIconModule, NbLayoutModule, NbMenuModule, NbSidebarModule, NbThemeModule, NbUserModule } from '@nebular/theme';
+import { NbActionsModule, NbContextMenuModule, NbIconModule, NbLayoutModule, NbMenuModule, NbSidebarModule, NbThemeModule, NbToastrModule, NbUserModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 
@@ -17,6 +17,7 @@ export const appConfig: ApplicationConfig = {
       NbLayoutModule,
       NbSidebarModule.forRoot(),
       NbMenuModule.forRoot(),
+      NbToastrModule.forRoot(),
       NbIconModule,
       NbEvaIconsModule,
       NbActionsModule,
