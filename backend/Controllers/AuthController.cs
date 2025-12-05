@@ -22,6 +22,7 @@ public class AuthController : ControllerBase{
             var token = _authService.GenerateJwtToken(user);
             return Ok(new {
                 message     = "Usuario registrado exitosamente",
+                name        = user.Name,
                 email       = user.Email,
                 token       = token,
                 createdAt   = user.CreatedAt

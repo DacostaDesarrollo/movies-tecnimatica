@@ -16,10 +16,11 @@ import { test, expect } from '@playwright/test';
 test.describe('Authentication Flow', () => {
 
   // Generar email único para CADA test
-  let testUser: { email: string; password: string };
+  let testUser: { name: string; email: string; password: string };
 
   test.beforeEach(() => {
     testUser = {
+      name: 'Test User',
       email: `test-${Date.now()}@example.com`,
       password: 'TestPassword123!'
     };
@@ -33,6 +34,7 @@ test.describe('Authentication Flow', () => {
     await expect(page.getByRole('heading', { name: /Crear Cuenta/i })).toBeVisible();
 
     // ACT: Llenar el formulario de registro
+    await page.fill('input[formControlName="name"]', testUser.name);
     await page.fill('input[formControlName="email"]', testUser.email);
     await page.fill('input[formControlName="password"]', testUser.password);
     await page.fill('input[formControlName="confirmPassword"]', testUser.password);
@@ -43,8 +45,8 @@ test.describe('Authentication Flow', () => {
     // ASSERT: Verificar que se redirigió a /pages/search (lo más importante)
     await expect(page).toHaveURL(/\/pages\/search/, { timeout: 10000 });
 
-    // Verificar que el usuario está logueado (aparece su email en el header)
-    await expect(page.locator(`text=${testUser.email}`)).toBeVisible();
+    // Verificar que el usuario está logueado usando el selector nb-user
+    await expect(page.locator('nb-user')).toBeVisible();
   });
 
   /**
@@ -53,6 +55,7 @@ test.describe('Authentication Flow', () => {
   test('should login with valid credentials', async ({ page }) => {
   // Primero registramos el usuario
   await page.goto('/auth/register');
+  await page.fill('input[formControlName="name"]', testUser.name);
   await page.fill('input[formControlName="email"]', testUser.email);
   await page.fill('input[formControlName="password"]', testUser.password);
   await page.fill('input[formControlName="confirmPassword"]', testUser.password);
@@ -62,7 +65,7 @@ test.describe('Authentication Flow', () => {
   await page.waitForURL(/\/pages\/search/);
 
   // Hacemos logout - primero abrir el menú de usuario
-  await page.click('text=' + testUser.email); // Click en el email del usuario
+  await page.click('nb-user'); // Click en el componente nb-user
   await page.click('text=Cerrar Sesión'); // Ahora sí aparece la opción
   await page.waitForURL(/\/auth\/login/);
 
@@ -102,6 +105,7 @@ test.describe('Authentication Flow', () => {
 
     // Registrar usuario
     await page.goto('/auth/register');
+    await page.fill('input[formControlName="name"]', testUser.name);
     await page.fill('input[formControlName="email"]', testUser.email);
     await page.fill('input[formControlName="password"]', testUser.password);
     await page.fill('input[formControlName="confirmPassword"]', testUser.password);
@@ -109,7 +113,7 @@ test.describe('Authentication Flow', () => {
     await page.waitForURL(/\/pages\/search/);
 
     // ACT: Hacer logout - abrir menú de usuario primero
-    await page.click(`text=${testUser.email}`); // Click en el email
+    await page.click('nb-user'); // Click en el componente nb-user
     await page.click('text=Cerrar Sesión'); // Click en logout del menú
 
     // ASSERT: Verificar redirección a login
@@ -132,7 +136,7 @@ test.describe('Authentication Flow', () => {
     await page.click('button[type="submit"]');
 
     // ASSERT: Verificar que aparecen mensajes de error
-    await expect(page.locator('text=El email es obligatorio')).toBeVisible();
+    await expect(page.locator('text=El email es obligatorio').first()).toBeVisible();
     await expect(page.locator('text=La contraseña es obligatoria')).toBeVisible();
     await expect(page.locator('text=Confirma tu contraseña')).toBeVisible();
 

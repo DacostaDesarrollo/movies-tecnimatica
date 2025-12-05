@@ -78,7 +78,7 @@ describe('AuthService', () => {
     it('should load user from storage on creation', () => {
       // Recreamos el servicio con datos en storage
       const mockToken = 'mock-token';
-      const mockUser = { email: 'test@example.com' };
+      const mockUser = { name: 'Test User', email: 'test@example.com' };
 
       tokenServiceSpy.getToken.and.returnValue(mockToken);
       tokenServiceSpy.getUser.and.returnValue(mockUser);
@@ -102,6 +102,7 @@ describe('AuthService', () => {
   describe('register', () => {
     it('should send POST request to /auth/register', () => {
       const registerData: RegisterRequest = {
+        name: 'New User',
         email: 'newuser@example.com',
         password: 'Password123!'
       };
@@ -109,6 +110,7 @@ describe('AuthService', () => {
       const mockResponse: AuthResponse = {
         message: 'Usuario registrado exitosamente',
         token: 'mock-jwt-token',
+        name: 'New User',
         email: 'newuser@example.com'
       };
 
@@ -127,11 +129,12 @@ describe('AuthService', () => {
 
       // Verificamos que se guardaron token y usuario
       expect(tokenServiceSpy.saveToken).toHaveBeenCalledWith(mockResponse.token);
-      expect(tokenServiceSpy.saveUser).toHaveBeenCalledWith(mockResponse.email);
+      expect(tokenServiceSpy.saveUser).toHaveBeenCalledWith(mockResponse.name, mockResponse.email);
     });
 
     it('should handle registration error', () => {
       const registerData: RegisterRequest = {
+        name: 'Existing User',
         email: 'existing@example.com',
         password: 'Password123!'
       };
@@ -165,6 +168,7 @@ describe('AuthService', () => {
       const mockResponse: AuthResponse = {
         message: 'Login exitoso',
         token: 'mock-jwt-token',
+        name: 'Test User',
         email: 'user@example.com'
       };
 
@@ -179,7 +183,7 @@ describe('AuthService', () => {
       req.flush(mockResponse);
 
       expect(tokenServiceSpy.saveToken).toHaveBeenCalledWith(mockResponse.token);
-      expect(tokenServiceSpy.saveUser).toHaveBeenCalledWith(mockResponse.email);
+      expect(tokenServiceSpy.saveUser).toHaveBeenCalledWith(mockResponse.name, mockResponse.email);
     });
 
     it('should handle login error for invalid credentials', () => {
@@ -208,6 +212,7 @@ describe('AuthService', () => {
       const mockResponse: AuthResponse = {
         message: 'Login exitoso',
         token: 'mock-jwt-token',
+        name: 'Test User',
         email: 'user@example.com'
       };
 
@@ -246,7 +251,7 @@ describe('AuthService', () => {
     it('should clear currentUser$ observable', (done) => {
       // Primero seteamos un usuario
       const mockToken = 'mock-token';
-      const mockUser = { email: 'test@example.com' };
+      const mockUser = { name: 'Test User', email: 'test@example.com' };
 
       tokenServiceSpy.getToken.and.returnValue(mockToken);
       tokenServiceSpy.getUser.and.returnValue(mockUser);
@@ -268,6 +273,7 @@ describe('AuthService', () => {
   describe('getCurrentUser', () => {
     it('should return current user from observable', (done) => {
       const mockUser = {
+        name: 'Test User',
         email: 'test@example.com',
         token: 'mock-token'
       };
@@ -281,6 +287,7 @@ describe('AuthService', () => {
       const mockResponse: AuthResponse = {
         message: 'Login exitoso',
         token: 'mock-token',
+        name: 'Test User',
         email: 'test@example.com'
       };
 

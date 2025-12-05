@@ -14,10 +14,11 @@ import { test, expect } from '@playwright/test';
 test.describe('Movies Search and Favorites', () => {
 
   // Generar email único para CADA test
-  let testUser: { email: string; password: string };
+  let testUser: { name: string; email: string; password: string };
 
   test.beforeEach(() => {
     testUser = {
+      name: 'Movie Test User',
       email: `movietest-${Date.now()}@example.com`,
       password: 'TestPassword123!'
     };
@@ -26,6 +27,7 @@ test.describe('Movies Search and Favorites', () => {
   // Helper: Login del usuario
   async function loginUser(page: any) {
     await page.goto('/auth/register');
+    await page.fill('input[formControlName="name"]', testUser.name);
     await page.fill('input[formControlName="email"]', testUser.email);
     await page.fill('input[formControlName="password"]', testUser.password);
     await page.fill('input[formControlName="confirmPassword"]', testUser.password);

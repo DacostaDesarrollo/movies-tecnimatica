@@ -111,11 +111,12 @@ describe('TokenService', () => {
    */
   describe('saveUser', () => {
     it('should save user email to storage', () => {
+      const name = 'Test User';
       const email = 'test@example.com';
 
-      service.saveUser(email);
+      service.saveUser(name, email);
 
-      expect(storageServiceSpy.setItem).toHaveBeenCalledWith('current_user', { email });
+      expect(storageServiceSpy.setItem).toHaveBeenCalledWith('current_user', { name, email });
     });
   });
 
@@ -124,7 +125,7 @@ describe('TokenService', () => {
    */
   describe('getUser', () => {
     it('should return user from storage', () => {
-      const mockUser = { email: 'test@example.com' };
+      const mockUser = { name: 'Test User', email: 'test@example.com' };
       storageServiceSpy.getItem.and.returnValue(mockUser);
 
       const result = service.getUser();
