@@ -92,8 +92,8 @@ test.describe('Authentication Flow', () => {
     // ASSERT: Verificar que NO se redirigió
     await expect(page).toHaveURL(/\/auth\/login/);
 
-    // Verificar que aparece mensaje de error (el texto real que se muestra)
-    await expect(page.locator('text=Credenciales inválidas')).toBeVisible({ timeout: 5000 });
+    // Verificar que aparece mensaje de error - usar getByText con substring match
+    await expect(page.getByText(/Credenciales inválidas/i)).toBeVisible({ timeout: 5000 });
   });
 
   /**
