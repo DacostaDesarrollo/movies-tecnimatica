@@ -17,6 +17,7 @@ public class AppDbContext: DbContext {
         modelBuilder.Entity<User>(entity =>{
             entity.ToTable("users"); // Nombre de tabla en minúsculas
             entity.HasKey(e   => e.Id);
+            entity.Property(e => e.Name).HasColumnName("name_user");
             entity.Property(e => e.Id).HasColumnName("id_user");
             entity.Property(e => e.Email).HasColumnName("email_user").IsRequired().HasMaxLength(255);
             entity.HasIndex(e => e.Email).IsUnique(); //El Email es unico

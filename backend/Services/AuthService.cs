@@ -32,6 +32,7 @@ public class AuthService: IAuthService {
         //Crear el usuario nuevo
 
         var user = new User{
+            Name = dto.Name,
             Email= dto.Email,
             PasswordHash = passwordHash,
             CreatedAt = DateTime.UtcNow

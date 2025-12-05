@@ -16,6 +16,21 @@
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
+            <label for="name" class="label">Nombre</label>
+            <input
+              nbInput
+              fullWidth
+              type="name"
+              id="name"
+              formControlName="name"
+              placeholder="pedro"
+              [status]="name?.invalid && name?.touched ? 'danger' : 'basic'"
+            >
+            <div class="error-message" *ngIf="name?.invalid && name?.touched">
+              <span *ngIf="name?.errors?.['required']">El email es obligatorio</span>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="email" class="label">Email</label>
             <input
               nbInput
@@ -31,6 +46,7 @@
               <span *ngIf="email?.errors?.['email']">El email no es válido</span>
             </div>
           </div>
+
 
           <div class="form-group">
             <label for="password" class="label">Contraseña</label>
