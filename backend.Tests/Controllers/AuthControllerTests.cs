@@ -46,6 +46,7 @@ public class AuthControllerTests
         var mockUser = new User
         {
             Id = 1,
+            Name = "Test User",
             Email = registerDto.Email,
             PasswordHash = "hashed",
             CreatedAt = DateTime.UtcNow
@@ -150,6 +151,7 @@ public class AuthControllerTests
         var mockUser = new User
         {
             Id = 1,
+            Name = "Test User",
             Email = loginDto.Email,
             PasswordHash = "hashed",
             CreatedAt = DateTime.UtcNow
@@ -247,6 +249,7 @@ public class AuthControllerTests
         var expectedUser = new User
         {
             Id = 99,
+            Name = "Test User",
             Email = "test@example.com",
             PasswordHash = "hashed",
             CreatedAt = DateTime.UtcNow

@@ -69,6 +69,7 @@ public class AuthServiceTests : IDisposable
         // Arrange
         var registerDto = new RegisterDto
         {
+            Name = "New User",
             Email = "newuser@example.com",
             Password = "Password123!"
         };
@@ -95,6 +96,7 @@ public class AuthServiceTests : IDisposable
         // Arrange
         var existingUser = new User
         {
+            Name = "Existing User",
             Email = "existing@example.com",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Password123!"),
             CreatedAt = DateTime.UtcNow
@@ -104,6 +106,7 @@ public class AuthServiceTests : IDisposable
 
         var registerDto = new RegisterDto
         {
+            Name = "New User",
             Email = "existing@example.com",
             Password = "NewPassword123!"
         };
@@ -122,6 +125,7 @@ public class AuthServiceTests : IDisposable
         // Arrange
         var registerDto = new RegisterDto
         {
+            Name = "Test User",
             Email = "test@example.com",
             Password = "PlainTextPassword123!"
         };
@@ -145,6 +149,7 @@ public class AuthServiceTests : IDisposable
         var password = "Password123!";
         var user = new User
         {
+            Name = "Test User",
             Email = "user@example.com",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
             CreatedAt = DateTime.UtcNow
@@ -191,6 +196,7 @@ public class AuthServiceTests : IDisposable
         // Arrange
         var user = new User
         {
+            Name = "Test User",
             Email = "user@example.com",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("CorrectPassword123!"),
             CreatedAt = DateTime.UtcNow
@@ -223,6 +229,7 @@ public class AuthServiceTests : IDisposable
         var user = new User
         {
             Id = 1,
+            Name = "Test User",
             Email = "user@example.com",
             PasswordHash = "hashed",
             CreatedAt = DateTime.UtcNow
@@ -244,6 +251,7 @@ public class AuthServiceTests : IDisposable
         var user = new User
         {
             Id = 42,
+            Name = "Test User",
             Email = "test@example.com",
             PasswordHash = "hashed",
             CreatedAt = DateTime.UtcNow
@@ -269,6 +277,7 @@ public class AuthServiceTests : IDisposable
         var user = new User
         {
             Id = 1,
+            Name = "Test User",
             Email = "user@example.com",
             PasswordHash = "hashed",
             CreatedAt = DateTime.UtcNow
