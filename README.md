@@ -98,6 +98,7 @@ Crear cuenta nueva desde la interfaz de registro.
 
 **Escalabilidad:**
 
+- Una sección para el perfil del usuario con avatar
 - Implementar gestor de estado (NgRx/Akita) para manejar estado global de forma más estructurada
 - Mejora el diseño y experiencia de usuario me centre en la funcionalidad en el backend y frontend
 - en el fronend mas separacion de componentes para reutilización de los mismos
