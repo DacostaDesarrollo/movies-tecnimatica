@@ -21,8 +21,6 @@
 
 /* Ellipsis para email largo en nb-user */
 nb-user {
-  max-width: 200px;
-
   .user-name {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -31,20 +29,6 @@ nb-user {
   }
 }
 
-@media (max-width: 768px) {
-  nb-user {
-    .user-name{
-      width: 120px;
-    }
-  }
-}
 
-@media (max-width: 480px) {
-  nb-user {
-   .user-name{
-      width: 100px;
-    }
-  }
-}
 
 

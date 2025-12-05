@@ -67,7 +67,7 @@ export class PagesComponent implements OnInit, OnDestroy {
     // Cargar datos del usuario actual
     this.authService.currentUser$.subscribe(user => {
       if (user) {
-        this.user.name = user.email;
+        this.user.name = user.name;
       }
     });
   }

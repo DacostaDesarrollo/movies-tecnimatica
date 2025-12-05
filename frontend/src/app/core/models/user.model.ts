@@ -1,27 +1,30 @@
 export interface User {
-  email: string;
-  token: string;
-  createdAt?: Date;
+  name: string
+  email: string,
+  token: string,
+  createdAt?: Date
 }
 
 export interface RegisterRequest {
-  email: string;
-  password: string;
+  name:string,
+  email: string,
+  password: string,
 }
 
 export interface LoginRequest {
-  email: string;
-  password: string;
+  email: string,
+  password: string
 }
 
 export interface AuthResponse {
-  message: string;
-  email: string;
-  token: string;
-  createdAt?: string;
+  message: string,
+  name:string,
+  email: string,
+  token: string,
+  createdAt?: string
 }
 
 export interface ErrorResponse {
-  error: string;
-  details?: string;
+  error: string,
+  details?: string
 }

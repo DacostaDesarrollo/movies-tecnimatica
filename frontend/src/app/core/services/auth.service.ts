@@ -34,6 +34,7 @@ export class AuthService {
 
     if (token && userData) {
       this.currentUserSubject.next({
+        name: userData.name,
         email: userData.email,
         token: token
       });
@@ -55,19 +56,23 @@ export class AuthService {
   }
 
   private handleAuthSuccess(response: AuthResponse): void {
+    debugger
     this.tokenService.saveToken(response.token);
-    this.tokenService.saveUser(response.email);
+    this.tokenService.saveUser(response.name,response.email);
 
     this.currentUserSubject.next({
+      name: response.name,
       email: response.email,
       token: response.token
     });
   }
 
   logout(): void {
+
     this.tokenService.clear();
     this.currentUserSubject.next(null);
     this.router.navigate(['/auth/login']);
+
   }
 
   isAuthenticated(): boolean {

@@ -42,6 +42,7 @@ export class RegisterComponent {
     private authService: AuthService
   ) {
     this.registerForm = this.fb.group({
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
@@ -61,6 +62,9 @@ export class RegisterComponent {
     return null;
   }
 
+  get name() {
+    return this.registerForm.get('name');
+  }
   get email() {
     return this.registerForm.get('email');
   }
@@ -83,8 +87,8 @@ export class RegisterComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const { email, password } = this.registerForm.value;
-    const registerData: RegisterRequest = { email, password };
+    const {name, email, password } = this.registerForm.value;
+    const registerData: RegisterRequest = {name, email, password };
 
     this.authService.register(registerData).subscribe({
       next: (response) => {

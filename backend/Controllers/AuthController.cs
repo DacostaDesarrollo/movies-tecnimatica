@@ -50,6 +50,7 @@ public class AuthController : ControllerBase{
             {
                 message = "Login exitoso",
                 email = user.Email,
+                name= user.Name,
                 token = token
             });
         }

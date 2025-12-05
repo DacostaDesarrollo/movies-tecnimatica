@@ -22,12 +22,12 @@ export class TokenService{
     this.storageService.removeItem(this.TOKEN_KEY);
   }
 
-  saveUser(email: string): void {
-    this.storageService.setItem(this.USER_KEY, { email });
+  saveUser(name:string, email: string): void {
+    this.storageService.setItem(this.USER_KEY, { name, email });
   }
 
-  getUser(): { email: string } | null {
-    return this.storageService.getItem<{ email: string }>(this.USER_KEY);
+  getUser(): { name:string, email: string } | null {
+    return this.storageService.getItem<{ name:string, email: string }>(this.USER_KEY);
   }
 
   removeUser(): void {
