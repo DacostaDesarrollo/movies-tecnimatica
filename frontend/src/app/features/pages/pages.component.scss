@@ -8,8 +8,8 @@
     .menu-toggle {
       margin-right: 1rem;
       border-radius: 50%;
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 40px;
+      height: 40px;
       padding: 0;
       display: flex;
       align-items: center;
@@ -29,6 +29,11 @@
     h4 {
       margin: 0 1rem;
       font-weight: 600;
+      line-height: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
     }
   }
 
@@ -51,4 +56,20 @@
   nb-layout-column {
     padding: 2rem;
   }
+
+  @media (max-width: 768px) {
+    .header-container{
+      h4{
+        font-size: 1.3rem;
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    .header-container{
+      h4{
+        font-size: 1rem;
+      }
+    }
+  }
+
 }

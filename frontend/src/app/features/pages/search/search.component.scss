@@ -209,6 +209,13 @@
 }
 
 @media (max-width: 480px) {
+  .type-selector {
+    nb-radio-group{
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+  }
+
   .movies-grid app-movie-card {
     flex: 1 1 100%; // 1 columna en móvil
     max-width: 100%;
